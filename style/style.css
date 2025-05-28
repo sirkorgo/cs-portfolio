@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 body {
-  background: url(/style/bg.png) 0% 0% / 300px 300px repeat;
-  margin: 0;
-  display: flex;
-  justify-content: center;
+    background: url(/style/bg.png) 0% 0% / 300px 300px repeat;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+    background-size: 400px 400px; /* Make the background larger than the viewport */
+    animation: moveBackground 10s infinite alternate linear; /* Add animation */
+    overflow: hidden;
+}
+
+@keyframes moveBackground {
+    from { background-position: 0 0; }
+  to { background-position: 100% 100%; }
 }
 
 h1 {
