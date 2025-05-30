@@ -8,7 +8,6 @@ body {
     height: 100vh; /* Ensure the body takes up the full viewport height */
     background-size: 400px 400px; /* Make the background larger than the viewport */
     animation: moveBackground 10s infinite alternate linear; /* Add animation */
-    overflow: hidden;
 }
 
 @keyframes moveBackground {
