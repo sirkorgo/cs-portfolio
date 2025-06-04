@@ -43,49 +43,54 @@
   <button class="menu-button" onclick="toggleNavbar()" id="menuBtn">☰</button>
 
   <script>
-      function loadContent(page) {
-  fetch(`/pages/${page}.html`)
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to load content');
-      return response.text();
-    })
-    .then(html => {
-      document.getElementById('content').innerHTML = html;
-      document.querySelectorAll('.navbar a').forEach(link => link.classList.remove('active'));
-      const activeLink = document.getElementById(page);
-      if (activeLink) activeLink.classList.add('active');
-      window.location.hash = page;
+  function loadContent(page) {
+    fetch(`/pages/${page}.html`)
+      .then(response => {
+        if (!response.ok) throw new Error('Failed to load content');
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('content').innerHTML = html;
+        document.querySelectorAll('.navbar a').forEach(link => link.classList.remove('active'));
+        const activeLink = document.getElementById(page);
+        if (activeLink) activeLink.classList.add('active');
+        window.location.hash = page;
 
-      // Close the navbar if it's open (for mobile)
-      const nav = document.getElementById('navbar');
-      const btn = document.getElementById('menuBtn');
-      if (nav.classList.contains('show')) {
-        nav.classList.remove('show');
-        btn.classList.remove('active');
-      }
-    })
-    .catch(() => {
-      document.getElementById('content').innerHTML = '<p>Error loading content. Please try again.</p>';
-    });
-}
+        // Scroll to the top of the page
+        window.scrollTo(0, 0);
 
-      function toggleNavbar() {
+        // Close the navbar if it's open (for mobile)
+        const nav = document.getElementById('navbar');
+        const btn = document.getElementById('menuBtn');
+        if (nav.classList.contains('show')) {
+          nav.classList.remove('show');
+          btn.classList.remove('active');
+        }
+      })
+      .catch(() => {
+        document.getElementById('content').innerHTML = '<p>Error loading content. Please try again.</p>';
+        window.scrollTo(0, 0); // Scroll to top even if there's an error
+      });
+  }
+
+  function toggleNavbar() {
     const nav = document.getElementById('navbar');
     const btn = document.getElementById('menuBtn');
     nav.classList.toggle('show');
     btn.classList.toggle('active');
   }
 
+  window.addEventListener('load', () => {
+    const page = window.location.hash.slice(1) || 'about';
+    loadContent(page);
+    window.scrollTo(0, 0); // Scroll to top on initial page load
+  });
 
-      window.addEventListener('load', () => {
-        const page = window.location.hash.slice(1) || 'about';
-        loadContent(page);
-      });
-
-      window.addEventListener('hashchange', () => {
-        const page = window.location.hash.slice(1) || 'about';
-        loadContent(page);
-      });
-    </script>
+  window.addEventListener('hashchange', () => {
+    const page = window.location.hash.slice(1) || 'about';
+    loadContent(page);
+    window.scrollTo(0, 0); // Scroll to top when hash changes
+  });
+</script>
   </body>
 </html>
